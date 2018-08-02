@@ -40,9 +40,9 @@ library F3Ddatasets {
         bytes32 name;   // player name
         uint256 win;    // winnings vault
         uint256 gen;    // general vault
-        uint256 aff;    // affiliate vault
+        uint256 aff;    // affiliate vault/使隶属于，接纳…为成员;
         uint256 lrnd;   // last round played
-        uint256 laff;   // last affiliate id used
+        uint256 laff;   // last affiliate id used/使隶属于，接纳…为成员;
     }
     struct PlayerRounds {
         uint256 eth;    // eth player has added to round (used for eth limiter)

@@ -135,8 +135,8 @@ contract FoMo3Dlong is modularLong {
         // 2 = sneks
         // 3 = bulls
 
-		// Team allocation percentages
-        // (F3D, P3D) + (Pot , Referrals, Community)
+		// Team allocation percentages/团队分配比例
+        // (F3D, P3D) + (Pot/奖金池 , Referrals/被介绍人, Community/社区)
             // Referrals / Community rewards are mathematically designed to come from the winner's share of the pot.
         fees_[0] = F3Ddatasets.TeamFee(30,6);   //50% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
         fees_[1] = F3Ddatasets.TeamFee(43,0);   //43% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
