@@ -1,11 +1,65 @@
 pragma solidity ^0.4.24;
+/**
+ * 代码地址：https://etherscan.io/address/0xa62142888aba8370742be823c1782d17a0389da1#code
+ * @title -FoMo-3D v0.7.1
+ * ┌┬┐┌─┐┌─┐┌┬┐   ╦╦ ╦╔═╗╔╦╗  ┌─┐┬─┐┌─┐┌─┐┌─┐┌┐┌┌┬┐┌─┐
+ *  │ ├┤ ├─┤│││   ║║ ║╚═╗ ║   ├─┘├┬┘├┤ └─┐├┤ │││ │ └─┐
+ *  ┴ └─┘┴ ┴┴ ┴  ╚╝╚═╝╚═╝ ╩   ┴  ┴└─└─┘└─┘└─┘┘└┘ ┴ └─┘
+ *                                  _____                      _____
+ *                                 (, /     /)       /) /)    (, /      /)          /)
+ *          ┌─┐                      /   _ (/_      // //       /  _   // _   __  _(/
+ *          ├─┤                  ___/___(/_/(__(_/_(/_(/_   ___/__/_)_(/_(_(_/ (_(_(_
+ *          ┴ ┴                /   /          .-/ _____   (__ /
+ *                            (__ /          (_/ (, /                                      /)™
+ *                                                 /  __  __ __ __  _   __ __  _  _/_ _  _(/
+ * ┌─┐┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐                          /__/ (_(__(_)/ (_/_)_(_)/ (_(_(_(__(/_(_(_
+ * ├─┘├┬┘│ │ │││ ││   │                      (__ /              .-/  © Jekyll Island Inc. 2018
+ * ┴  ┴└─└─┘─┴┘└─┘└─┘ ┴                                        (_/   .--,-``-.
+ *========,---,.======================____==========================/   /     '.=======,---,====*
+ *      ,'  .' |                    ,'  , `.                       / ../        ;    .'  .' `\
+ *    ,---.'   |    ,---.        ,-+-,.' _ |    ,---.              \ ``\  .`-    ' ,---.'     \
+ *    |   |   .'   '   ,'\    ,-+-. ;   , ||   '   ,'\      ,---,.  \___\/   \   : |   |  .`\  |
+ *    :   :  :    /   /   |  ,--.'|'   |  ||  /   /   |   ,'  .' |       \   :   | :   : |  '  |
+ *    :   |  |-, .   ; ,. : |   |  ,', |  |, .   ; ,. : ,---.'   |       /  /   /  |   ' '  ;  :
+ *    |   :  ;/| '   | |: : |   | /  | |--'  '   | |: : |   |  .'        \  \   \  '   | ;  .  |
+ *    |   |   .' '   | .; : |   : |  | ,     '   | .; : :   |.'      ___ /   :   | |   | :  |  '
+ *    '   :  '   |   :    | |   : |  |/      |   :    | `---'       /   /\   /   : '   : | /  ;
+ *    |   |  |    \   \  /  |   | |`-'        \   \  /             / ,,/  ',-    . |   | '` ,/
+ *    |   :  \     `----'   |   ;/             `----'              \ ''\        ;  ;   :  .'
+ *====|   | ,'=============='---'==========(long version)===========\   \     .'===|   ,.'======*
+ *    `----'                                                         `--`-,,-'     '---'
+ *             ╔═╗┌─┐┌─┐┬┌─┐┬┌─┐┬   ┌─────────────────────────┐ ╦ ╦┌─┐┌┐ ╔═╗┬┌┬┐┌─┐
+ *             ║ ║├┤ ├┤ ││  │├─┤│   │   https://exitscam.me   │ ║║║├┤ ├┴┐╚═╗│ │ ├┤
+ *             ╚═╝└  └  ┴└─┘┴┴ ┴┴─┘ └─┬─────────────────────┬─┘ ╚╩╝└─┘└─┘╚═╝┴ ┴ └─┘
+ *   ┌────────────────────────────────┘                     └──────────────────────────────┐
+ *   │╔═╗┌─┐┬  ┬┌┬┐┬┌┬┐┬ ┬   ╔╦╗┌─┐┌─┐┬┌─┐┌┐┌   ╦┌┐┌┌┬┐┌─┐┬─┐┌─┐┌─┐┌─┐┌─┐   ╔═╗┌┬┐┌─┐┌─┐┬┌─│
+ *   │╚═╗│ ││  │ │││ │ └┬┘ ═  ║║├┤ └─┐││ ┬│││ ═ ║│││ │ ├┤ ├┬┘├┤ ├─┤│  ├┤  ═ ╚═╗ │ ├─┤│  ├┴┐│
+ *   │╚═╝└─┘┴─┘┴─┴┘┴ ┴  ┴    ═╩╝└─┘└─┘┴└─┘┘└┘   ╩┘└┘ ┴ └─┘┴└─└  ┴ ┴└─┘└─┘   ╚═╝ ┴ ┴ ┴└─┘┴ ┴│
+ *   │    ┌──────────┐           ┌───────┐            ┌─────────┐              ┌────────┐  │
+ *   └────┤ Inventor ├───────────┤ Justo ├────────────┤ Sumpunk ├──────────────┤ Mantso ├──┘
+ *        └──────────┘           └───────┘            └─────────┘              └────────┘
+ *   ┌─────────────────────────────────────────────────────────┐ ╔╦╗┬ ┬┌─┐┌┐┌┬┌─┌─┐  ╔╦╗┌─┐
+ *   │ Ambius, Aritz Cracker, Cryptoknight, Crypto McPump,     │  ║ ├─┤├─┤│││├┴┐└─┐   ║ │ │
+ *   │ Capex, JogFera, The Shocker, Daok, Randazzz, PumpRabbi, │  ╩ ┴ ┴┴ ┴┘└┘┴ ┴└─┘   ╩ └─┘
+ *   │ Kadaz, Incognito Jo, Lil Stronghands, Ninja Turtle,     └───────────────────────────┐
+ *   │ Psaints, Satoshi, Vitalik, Nano 2nd, Bogdanoffs         Isaac Newton, Nikola Tesla, │
+ *   │ Le Comte De Saint Germain, Albert Einstein, Socrates, & all the volunteer moderator │
+ *   │ & support staff, content, creators, autonomous agents, and indie devs for P3D.      │
+ *   │              Without your help, we wouldn't have the time to code this.             │
+ *   └─────────────────────────────────────────────────────────────────────────────────────┘
+ *
+ * This product is protected under license.  Any unauthorized copy, modification, or use without
+ * express written consent from the creators is prohibited.
+ *
+ * WARNING:  THIS PRODUCT IS HIGHLY ADDICTIVE.  IF YOU HAVE AN ADDICTIVE NATURE.  DO NOT PLAY.
+ */
+
 //==============================================================================
 //     _    _  _ _|_ _  .
 //    (/_\/(/_| | | _\  .
 //==============================================================================
 contract F3Devents {
     // fired whenever a player registers a name
-    // 当用户注册名称时发送的事件
     event onNewName
     (
         uint256 indexed playerID,
@@ -20,7 +74,6 @@ contract F3Devents {
     );
 
     // fired at end of buy or reload
-    // 在购买结束时发送
     event onEndTx
     (
         uint256 compressedData,
@@ -40,7 +93,6 @@ contract F3Devents {
     );
 
     // fired whenever theres a withdraw
-    // 在withdraw时发送
     event onWithdraw
     (
         uint256 indexed playerID,
@@ -126,53 +178,49 @@ contract F3Devents {
 
 contract modularLong is F3Devents {}
 
-contract FoMoGame is modularLong {
+contract FoMo3Dlong is modularLong {
     using SafeMath for *;
     using NameFilter for string;
     using F3DKeysCalcLong for uint256;
 
-    //ForwarderInterface constant private Team_Forwarder = ForwarderInterface(0xBd4C9aB2F3e241F1291D55af51CB0D949077B591);
-    //定义团队以太坊钱包地址
-    address private team = 0xBd01103c36f400344b427Cb51934B765007e16f6;
-
-    //引入外部智能合约/玩家本/
-    PlayerBookInterface constant private PlayerBook = PlayerBookInterface(0x7b9a68502B30E198408B9477F5355581937D4601);
-
+    otherFoMo3D private otherF3D_;
+    DiviesInterface constant private Divies = DiviesInterface(0xc7029Ed9EBa97A096e72607f4340c34049C7AF48);
+    JIincForwarderInterface constant private Jekyll_Island_Inc = JIincForwarderInterface(0xdd4950F977EE28D2C132f1353D1595035Db444EE);
+    PlayerBookInterface constant private PlayerBook = PlayerBookInterface(0xD60d353610D9a5Ca478769D371b53CEfAA7B6E4c);
+    F3DexternalSettingsInterface constant private extSettings = F3DexternalSettingsInterface(0x32967D6c142c2F38AB39235994e2DDF11c37d590);
     //==============================================================================
     //     _ _  _  |`. _     _ _ |_ | _  _  .
-    //    (_(_)| |~|~|(_||_|| (_||_)|(/__\  .  (game settings ,game相关设置)
+    //    (_(_)| |~|~|(_||_|| (_||_)|(/__\  .  (game settings)
     //=================_|===========================================================
-    string constant public name = "FoMoGame Official";
-    string constant public symbol = "FGame";
-    uint256 private rndExtra_ = 0;     // length of the very first ICO  ICO 最大长度
-    uint256 private rndGap_ = 0;         // length of ICO phase, set to 1 year for EOS.
-    uint256 constant private rndInit_ = 30 minutes;                // round timer starts at this 设置回合事件长度
-    uint256 constant private rndInc_ = 30 seconds;              // every full key purchased adds this much to the timer 每次购买key增加的时间长度
-    uint256 constant private rndMax_ = 30 minutes;                // max length a round timer can be 每回合最大时间长度
+    string constant public name = "FoMo3D Long Official";
+    string constant public symbol = "F3D";
+    uint256 private rndExtra_ = extSettings.getLongExtra();     // length of the very first ICO
+    uint256 private rndGap_ = extSettings.getLongGap();         // length of ICO phase, set to 1 year for EOS.
+    uint256 constant private rndInit_ = 1 hours;                // round timer starts at this
+    uint256 constant private rndInc_ = 30 seconds;              // every full key purchased adds this much to the timer
+    uint256 constant private rndMax_ = 24 hours;                // max length a round timer can be
     //==============================================================================
     //     _| _ _|_ _    _ _ _|_    _   .
-    //    (_|(_| | (_|  _\(/_ | |_||_)  .  (data used to store game info that changes ， 用于存储游戏数据信息)
+    //    (_|(_| | (_|  _\(/_ | |_||_)  .  (data used to store game info that changes)
     //=============================|================================================
-    uint256 public airDropPot_;             // person who gets the airdrop wins part of this pot 空投奖金池
-    uint256 public airDropTracker_ = 0;     // incremented each time a "qualified" tx occurs.  used to determine winning air drop ， 每次购买递增的数据，用于确定空投
-    uint256 public rID_;    // round id number / total rounds that have happened ， round id
+    uint256 public airDropPot_;             // person who gets the airdrop wins part of this pot
+    uint256 public airDropTracker_ = 0;     // incremented each time a "qualified" tx occurs.  used to determine winning air drop
+    uint256 public rID_;    // round id number / total rounds that have happened
     //****************
-    // PLAYER DATA  玩家数据
+    // PLAYER DATA
     //****************
     mapping (address => uint256) public pIDxAddr_;          // (addr => pID) returns player id by address
     mapping (bytes32 => uint256) public pIDxName_;          // (name => pID) returns player id by name
-    mapping (uint256 => F3Ddatasets.Player) public plyr_;   // (pID => data) player data 用pid关联的玩家数据
+    mapping (uint256 => F3Ddatasets.Player) public plyr_;   // (pID => data) player data
     mapping (uint256 => mapping (uint256 => F3Ddatasets.PlayerRounds)) public plyrRnds_;    // (pID => rID => data) player round data by player id & round id
     mapping (uint256 => mapping (bytes32 => bool)) public plyrNames_; // (pID => name => bool) list of names a player owns.  (used so you can change your display name amongst any name you own)
     //****************
-    // ROUND DATA 回合信息
+    // ROUND DATA
     //****************
-    // <回合ID,回合数据>
     mapping (uint256 => F3Ddatasets.Round) public round_;   // (rID => data) round data
-    // <回合ID,<团队ID,团队的eth>>
     mapping (uint256 => mapping(uint256 => uint256)) public rndTmEth_;      // (rID => tID => data) eth in per team, by round id and team id
     //****************
-    // TEAM FEE DATA 小队信息
+    // TEAM FEE DATA
     //****************
     mapping (uint256 => F3Ddatasets.TeamFee) public fees_;          // (team => fees) fee distribution by team
     mapping (uint256 => F3Ddatasets.PotSplit) public potSplit_;     // (team => fees) pot split distribution by team
@@ -189,24 +237,20 @@ contract FoMoGame is modularLong {
         // 2 = sneks
         // 3 = bulls
 
-        // ## 团队分配比例
         // Team allocation percentages
         // (F3D, P3D) + (Pot , Referrals, Community)
         // Referrals / Community rewards are mathematically designed to come from the winner's share of the pot.
-        fees_[0] = F3Ddatasets.TeamFee(45,0);   //32% to pot, 20% to aff, 2% to com, 1% to air drop pot
-        fees_[1] = F3Ddatasets.TeamFee(32,0);   //45% to pot, 20% to aff, 2% to com, 1% to air drop pot
-        fees_[2] = F3Ddatasets.TeamFee(57,0);  //20% to pot, 20% to aff, 2% to com, 1% to air drop pot
-        fees_[3] = F3Ddatasets.TeamFee(39,0);   //38% to pot, 20% to aff, 2% to com, 1% to air drop pot
+        fees_[0] = F3Ddatasets.TeamFee(30,6);   //50% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
+        fees_[1] = F3Ddatasets.TeamFee(43,0);   //43% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
+        fees_[2] = F3Ddatasets.TeamFee(56,10);  //20% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
+        fees_[3] = F3Ddatasets.TeamFee(43,8);   //35% to pot, 10% to aff, 2% to com, 1% to pot swap, 1% to air drop pot
 
-        // ## 奖池分配比例
         // how to split up the final pot based on which team was picked
         // (F3D, P3D)
-        potSplit_[0] = F3Ddatasets.PotSplit(30,0);  //48% to winner, 20% to next round, 2% to com
-        potSplit_[1] = F3Ddatasets.PotSplit(45,0);   //48% to winner, 5% to next round, 2% to com
-        potSplit_[2] = F3Ddatasets.PotSplit(40,0);  //48% to winner, 10% to next round, 2% to com
-        potSplit_[3] = F3Ddatasets.PotSplit(35,0);  //48% to winner, 15% to next round, 2% to com
-
-        // ##  这些分配比例在一轮结束的时候会用到
+        potSplit_[0] = F3Ddatasets.PotSplit(15,10);  //48% to winner, 25% to next round, 2% to com
+        potSplit_[1] = F3Ddatasets.PotSplit(25,0);   //48% to winner, 25% to next round, 2% to com
+        potSplit_[2] = F3Ddatasets.PotSplit(20,20);  //48% to winner, 10% to next round, 2% to com
+        potSplit_[3] = F3Ddatasets.PotSplit(30,10);  //48% to winner, 10% to next round, 2% to com
     }
     //==============================================================================
     //     _ _  _  _|. |`. _  _ _  .
@@ -223,12 +267,9 @@ contract FoMoGame is modularLong {
 
     /**
      * @dev prevents contracts from interacting with fomo3d
-     * 判断是否是人，防止其他合约和fomo3d进行交互
      */
     modifier isHuman() {
         address _addr = msg.sender;
-        require (_addr == tx.origin);
-
         uint256 _codeLength;
 
         assembly {_codeLength := extcodesize(_addr)}
@@ -238,7 +279,6 @@ contract FoMoGame is modularLong {
 
     /**
      * @dev sets boundaries for incoming tx
-     * 设置传入的边界
      */
     modifier isWithinLimits(uint256 _eth) {
         require(_eth >= 1000000000, "pocket lint: not a valid currency");
@@ -246,10 +286,9 @@ contract FoMoGame is modularLong {
         _;
     }
 
-
     //==============================================================================
     //     _    |_ |. _   |`    _  __|_. _  _  _  .
-    //    |_)|_||_)||(_  ~|~|_|| |(_ | |(_)| |_\  .  (use these to interact with contract) 下面是和合约交互的内容
+    //    |_)|_||_)||(_  ~|~|_|| |(_ | |(_)| |_\  .  (use these to interact with contract)
     //====|=========================================================================
     /**
      * @dev emergency buy uses last stored affiliate ID and team snek
@@ -517,7 +556,7 @@ contract FoMoGame is modularLong {
     }
 
     /**
-     * @dev withdraws all of your earnings.  收回你的所有收益
+     * @dev withdraws all of your earnings.
      * -functionhash- 0x3ccfd60b
      */
     function withdraw()
@@ -545,7 +584,7 @@ contract FoMoGame is modularLong {
 
             // end the round (distributes pot)
             round_[_rID].ended = true;
-            _eventData_ = endRound(_eventData_); // endRound的结束时间
+            _eventData_ = endRound(_eventData_);
 
             // get their earnings
             _eth = withdrawEarnings(_pID);
@@ -594,16 +633,15 @@ contract FoMoGame is modularLong {
      * same as registering there.  UI will always display the last name you registered.
      * but you will still own all previously registered names to use as affiliate
      * links.
-     * 调用PlayerBook合约的方法来注册名称
-     * - must pay a registration fee.  必须缴纳注册费用
-     * - name must be unique 名称必须唯一
-     * - names will be converted to lowercase names必须转换为小写
-     * - name cannot start or end with a space 不能以空格开头或结尾
-     * - cannot have more than 1 space in a row 不能有空格
-     * - cannot be only numbers 不能有数字
-     * - cannot start with 0x 不能以0x开头
-     * - name must be at least 1 char 必须要有一个字符
-     * - max length of 32 characters long 不能超过32的长度
+     * - must pay a registration fee.
+     * - name must be unique
+     * - names will be converted to lowercase
+     * - name cannot start or end with a space
+     * - cannot have more than 1 space in a row
+     * - cannot be only numbers
+     * - cannot start with 0x
+     * - name must be at least 1 char
+     * - max length of 32 characters long
      * - allowed characters: a-z, 0-9, and space
      * -functionhash- 0x921dec21 (using ID for affiliate)
      * -functionhash- 0x3ddd4698 (using address for affiliate)
@@ -611,7 +649,7 @@ contract FoMoGame is modularLong {
      * @param _nameString players desired name
      * @param _affCode affiliate ID, address, or name of who referred you
      * @param _all set to true if you want this to push your info to all games
-     * (this might cost a lot of gas) 如果要把名字push到所有游戏中，则设置_all = true
+     * (this might cost a lot of gas)
      */
     function registerNameXID(string _nameString, uint256 _affCode, bool _all)
     isHuman()
@@ -668,7 +706,6 @@ contract FoMoGame is modularLong {
      * @dev return the price buyer will pay for next 1 individual key.
      * -functionhash- 0x018a25e8
      * @return price for next key bought (in wei format)
-     * 一个KEY的价格
      */
     function getBuyPrice()
     public
@@ -685,7 +722,7 @@ contract FoMoGame is modularLong {
         if (_now > round_[_rID].strt + rndGap_ && (_now <= round_[_rID].end || (_now > round_[_rID].end && round_[_rID].plyr == 0)))
             return ( (round_[_rID].keys.add(1000000000000000000)).ethRec(1000000000000000000) );
         else // rounds over.  need price for new round
-            return ( 75000000000001 ); // init
+            return ( 75000000000000 ); // init
     }
 
     /**
@@ -774,7 +811,6 @@ contract FoMoGame is modularLong {
     }
 
     /**
-     * 获取当前轮的基本信息
      * @dev returns all current round info needed for front end
      * -functionhash- 0x747dff42
      * @return eth invested during ICO phase
@@ -808,19 +844,18 @@ contract FoMoGame is modularLong {
         round_[_rID].end,               //3
         round_[_rID].strt,              //4
         round_[_rID].pot,               //5
-        (round_[_rID].team + (round_[_rID].plyr * 10)),     //6 // ## * 10 用于取模运算，因为team.id[0,3]，将队伍和玩家放在一个数字里
+        (round_[_rID].team + (round_[_rID].plyr * 10)),     //6
         plyr_[round_[_rID].plyr].addr,  //7
         plyr_[round_[_rID].plyr].name,  //8
         rndTmEth_[_rID][0],             //9
         rndTmEth_[_rID][1],             //10
         rndTmEth_[_rID][2],             //11
         rndTmEth_[_rID][3],             //12
-        airDropTracker_ + (airDropPot_ * 1000)              //13 // ## * 1000 用于取模运算，因为airDropTracker_[0,999]，将空投追踪数和空投池放在一个数字里
+        airDropTracker_ + (airDropPot_ * 1000)              //13
         );
     }
 
     /**
-     * 获取当前轮玩家的基本信息
      * @dev returns player info based on address.  if no address is given, it will
      * use msg.sender
      * -functionhash- 0xee0b5d8b
@@ -864,9 +899,8 @@ contract FoMoGame is modularLong {
     //    (_(_)| (/_  |(_)(_||(_  . (this + tools + calcs + modules = our softwares engine)
     //=====================_|=======================================================
     /**
-     * @dev logic runs whenever a buy order is executed. 当每一笔订单产生时，逻辑就会执行
-      怎么处理转入的eth取决于我们是在active round 或者不是
-     determines how to handle incoming eth depending on if we are in an active round or not
+     * @dev logic runs whenever a buy order is executed.  determines how to handle
+     * incoming eth depending on if we are in an active round or not
      */
     function buyCore(uint256 _pID, uint256 _affID, uint256 _team, F3Ddatasets.EventReturns memory _eventData_)
     private
@@ -990,7 +1024,6 @@ contract FoMoGame is modularLong {
         }
 
         // if eth left is greater than min eth allowed (sorry no pocket lint)
-        // 由于参数_eth是一个整数，而ETH精度18，所以这个参数_eth的单位必然是最小单位wei
         if (_eth > 1000000000)
         {
 
@@ -1000,9 +1033,9 @@ contract FoMoGame is modularLong {
             // if they bought at least 1 whole key
             if (_keys >= 1000000000000000000)
             {
-                updateTimer(_keys, _rID); // 更新时间
+                updateTimer(_keys, _rID);
 
-                // set new leaders ## 将最后购买的玩家设置为胜利的玩家，团队设置为胜利的团队
+                // set new leaders
                 if (round_[_rID].plyr != _pID)
                     round_[_rID].plyr = _pID;
                 if (round_[_rID].team != _team)
@@ -1012,33 +1045,15 @@ contract FoMoGame is modularLong {
                 _eventData_.compressedData = _eventData_.compressedData + 100;
             }
 
-            /*
-
-            ## 空投完整逻辑描述
-
-            1. 每次购买消耗以太坊的1%放到空投奖金池
-
-            ### 如果本轮奖金池累计以太坊超过1万个
-
-            1. 单次消费以太坊超过1个，那么空投追踪数增加1
-            2. 如果空投追踪数大于随机数(0-999)，那么对本次进行购买的账户进行空投
-            3. 如果消费的以太坊大于等于100个，那么将空投池的75%作为空投奖励
-            4. 如果消费的以太坊[10,100)个，那么将空投池的50%作为空投奖励
-            5. 如果消费的以太坊[1,10)个，那么将空投池的25%作为空投奖励
-
-            ### 如果本轮奖金池累计以太坊没有超过1万个
-
-            */
-
             // manage airdrops
-            if (_eth >= 100000000000000000) // ## 如果购买额度大于等于1个以太坊
+            if (_eth >= 100000000000000000)
             {
                 airDropTracker_++;
                 if (airdrop() == true)
                 {
                     // gib muni
                     uint256 _prize;
-                    if (_eth >= 10000000000000000000) // 如果购买额度大于等于100个以太坊
+                    if (_eth >= 10000000000000000000)
                     {
                         // calculate prize and give it to winner
                         _prize = ((airDropPot_).mul(75)) / 100;
@@ -1049,7 +1064,7 @@ contract FoMoGame is modularLong {
 
                         // let event know a tier 3 prize was won
                         _eventData_.compressedData += 300000000000000000000000000000000;
-                    } else if (_eth >= 1000000000000000000 && _eth < 10000000000000000000) { // 如果大于等于10小于100个以太坊
+                    } else if (_eth >= 1000000000000000000 && _eth < 10000000000000000000) {
                         // calculate prize and give it to winner
                         _prize = ((airDropPot_).mul(50)) / 100;
                         plyr_[_pID].win = (plyr_[_pID].win).add(_prize);
@@ -1059,7 +1074,7 @@ contract FoMoGame is modularLong {
 
                         // let event know a tier 2 prize was won
                         _eventData_.compressedData += 200000000000000000000000000000000;
-                    } else if (_eth >= 100000000000000000 && _eth < 1000000000000000000) { // 如果大于等于1小于10个以太坊
+                    } else if (_eth >= 100000000000000000 && _eth < 1000000000000000000) {
                         // calculate prize and give it to winner
                         _prize = ((airDropPot_).mul(25)) / 100;
                         plyr_[_pID].win = (plyr_[_pID].win).add(_prize);
@@ -1075,7 +1090,7 @@ contract FoMoGame is modularLong {
                     // let event know how much was won
                     _eventData_.compressedData += _prize * 1000000000000000000000000000000000;
 
-                    // reset air drop tracker // 空投一次之后进行空投追踪数的重置，每1000次1个ETH以上额度的购买必然空投一次
+                    // reset air drop tracker
                     airDropTracker_ = 0;
                 }
             }
@@ -1092,7 +1107,7 @@ contract FoMoGame is modularLong {
             round_[_rID].eth = _eth.add(round_[_rID].eth);
             rndTmEth_[_rID][_team] = _eth.add(rndTmEth_[_rID][_team]);
 
-            // distribute eth // ## 分配本次进入的以太坊，2%给外部社区，1%给内部空投奖金池
+            // distribute eth
             _eventData_ = distributeExternal(_rID, _pID, _eth, _affID, _team, _eventData_);
             _eventData_ = distributeInternal(_rID, _pID, _eth, _team, _keys, _eventData_);
 
@@ -1273,9 +1288,6 @@ contract FoMoGame is modularLong {
 
     /**
      * @dev ends the round. manages paying out winner/splitting up pot
-     * 结束一回合
-     * 1. 支付给赢家
-     * 2. 瓜分奖池，使用构造方法中设置的比例
      */
     function endRound(F3Ddatasets.EventReturns memory _eventData_)
     private
@@ -1285,24 +1297,22 @@ contract FoMoGame is modularLong {
         uint256 _rID = rID_;
 
         // grab our winning player and team id's
-        // 获取胜利的玩家ID和团队ID
         uint256 _winPID = round_[_rID].plyr;
         uint256 _winTID = round_[_rID].team;
 
         // grab our pot amount
-        // 获取当前轮的奖池
         uint256 _pot = round_[_rID].pot;
 
         // calculate our winner share, community rewards, gen share,
         // p3d share, and amount reserved for next pot
-        uint256 _win = (_pot.mul(48)) / 100; // 48%奖励给赢家
-        uint256 _com = (_pot / 50); // 2%奖励给社区
-        uint256 _gen = (_pot.mul(potSplit_[_winTID].gen)) / 100; // 根据选择的队伍的奖励比例，奖励给KEY持有者
-        uint256 _p3d = (_pot.mul(potSplit_[_winTID].p3d)) / 100; // 根据构造方法中设置的值，这个值实际上是0
-        uint256 _res = (((_pot.sub(_win)).sub(_com)).sub(_gen)).sub(_p3d); // 求剩下的：sub(减去)奖金池中去掉赢家的、减去社区的、减去KEY持有者的
+        uint256 _win = (_pot.mul(48)) / 100;
+        uint256 _com = (_pot / 50);
+        uint256 _gen = (_pot.mul(potSplit_[_winTID].gen)) / 100;
+        uint256 _p3d = (_pot.mul(potSplit_[_winTID].p3d)) / 100;
+        uint256 _res = (((_pot.sub(_win)).sub(_com)).sub(_gen)).sub(_p3d);
 
         // calculate ppt for round mask
-        uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys); // 把奖励给KEY持有者的奖励放大倍数/所有的KEY数量，得出每个KEY价值的eth
+        uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys);
         uint256 _dust = _gen.sub((_ppt.mul(round_[_rID].keys)) / 1000000000000000000);
         if (_dust > 0)
         {
@@ -1310,27 +1320,28 @@ contract FoMoGame is modularLong {
             _res = _res.add(_dust);
         }
 
-        // 上面这段代码的逻辑，其实就是求整求余，举例：gen=98,翻倍为100,keys=32
-        // _ppt = (98 * 100)/32 = 9800/32=306.25=306
-        // _dust = 9800 - (306 * 32)=9800-9792=8
-        // 8 > 0
-        // 将8从gen中减去，把8加入到剩余的_res中
-
         // pay our winner
-        plyr_[_winPID].win = _win.add(plyr_[_winPID].win); // 设置总的 = 此次获得的奖励加上之前赢取的
+        plyr_[_winPID].win = _win.add(plyr_[_winPID].win);
 
         // community rewards
-        team.transfer(_com);
+        if (!address(Jekyll_Island_Inc).call.value(_com)(bytes4(keccak256("deposit()"))))
+        {
+            // This ensures Team Just cannot influence the outcome of FoMo3D with
+            // bank migrations by breaking outgoing transactions.
+            // Something we would never do. But that's not the point.
+            // We spent 2000$ in eth re-deploying just to patch this, we hold the
+            // highest belief that everything we create should be trustless.
+            // Team JUST, The name you shouldn't have to trust.
+            _p3d = _p3d.add(_com);
+            _com = 0;
+        }
 
         // distribute gen portion to key holders
         round_[_rID].mask = _ppt.add(round_[_rID].mask);
 
         // send share for p3d to divies
-        // 理论上应该是0
         if (_p3d > 0)
-        {
-            team.transfer(_p3d);
-        }
+            Divies.deposit.value(_p3d)();
 
         // prepare event data
         _eventData_.compressedData = _eventData_.compressedData + (round_[_rID].end * 1000000);
@@ -1340,14 +1351,14 @@ contract FoMoGame is modularLong {
         _eventData_.amountWon = _win;
         _eventData_.genAmount = _gen;
         _eventData_.P3DAmount = _p3d;
-        _eventData_.newPot = _res; // 将剩余的[来自队伍和余数]eth
+        _eventData_.newPot = _res;
 
-        // start next round // 开始下一轮
+        // start next round
         rID_++;
         _rID++;
-        round_[_rID].strt = now; // 把当前设置为开始时间
-        round_[_rID].end = now.add(rndInit_).add(rndGap_); // 当前时间加上初始时间设置为结束时间
-        round_[_rID].pot = _res; // 将剩余的[来自队伍和余数]放入下一轮的奖池
+        round_[_rID].strt = now;
+        round_[_rID].end = now.add(rndInit_).add(rndGap_);
+        round_[_rID].pot = _res;
 
         return(_eventData_);
     }
@@ -1379,10 +1390,10 @@ contract FoMoGame is modularLong {
 
         // calculate time based on number of keys bought
         uint256 _newTime;
-        if (_now > round_[_rID].end && round_[_rID].plyr == 0) // (_keys) / (1000000000000000000)，一个key增加30秒
-            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now); // 如果是第一个人购买，从当前时间往上加
+        if (_now > round_[_rID].end && round_[_rID].plyr == 0)
+            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(_now);
         else
-            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end); // 如果不是第一个人购买，从最后时间往上加
+            _newTime = (((_keys) / (1000000000000000000)).mul(rndInc_)).add(round_[_rID].end);
 
         // compare to max and set new end time
         if (_newTime < (rndMax_).add(_now))
@@ -1392,7 +1403,7 @@ contract FoMoGame is modularLong {
     }
 
     /**
-     * @dev generates a random number between 0-999 and checks to see if thats
+     * @dev generates a random number between 0-99 and checks to see if thats
      * resulted in an airdrop win
      * @return do we have a winner?
      */
@@ -1401,7 +1412,6 @@ contract FoMoGame is modularLong {
     view
     returns(bool)
     {
-        // 用多个复合数据进行动态的离散的计算一个seed
         uint256 seed = uint256(keccak256(abi.encodePacked(
 
                 (block.timestamp).add
@@ -1412,7 +1422,7 @@ contract FoMoGame is modularLong {
                 (block.number)
 
             )));
-        if((seed - ((seed / 1000) * 1000)) < airDropTracker_) //  如果算出来的随机数(0-999)小于空投最终
+        if((seed - ((seed / 1000) * 1000)) < airDropTracker_)
             return(true);
         else
             return(false);
@@ -1420,27 +1430,36 @@ contract FoMoGame is modularLong {
 
     /**
      * @dev distributes eth based on fees to com, aff, and p3d
-     * 分发以太坊
      */
     function distributeExternal(uint256 _rID, uint256 _pID, uint256 _eth, uint256 _affID, uint256 _team, F3Ddatasets.EventReturns memory _eventData_)
     private
     returns(F3Ddatasets.EventReturns)
     {
-        // pay 2% out to community rewards ， 分配2%给社区
+        // pay 2% out to community rewards
         uint256 _com = _eth / 50;
+        uint256 _p3d;
+        if (!address(Jekyll_Island_Inc).call.value(_com)(bytes4(keccak256("deposit()"))))
+        {
+            // This ensures Team Just cannot influence the outcome of FoMo3D with
+            // bank migrations by breaking outgoing transactions.
+            // Something we would never do. But that's not the point.
+            // We spent 2000$ in eth re-deploying just to patch this, we hold the
+            // highest belief that everything we create should be trustless.
+            // Team JUST, The name you shouldn't have to trust.
+            _p3d = _com;
+            _com = 0;
+        }
 
-        uint256 _p3d = 0;
-        team.transfer(_com);
+        // pay 1% out to FoMo3D short
+        uint256 _long = _eth / 100;
+        otherF3D_.potSwap.value(_long)();
 
-
-
-        // distribute share to affiliate 分配20%给上家
-        uint256 _aff = _eth / 5;
+        // distribute share to affiliate
+        uint256 _aff = _eth / 10;
 
         // decide what to do with affiliate share of fees
         // affiliate must not be self, and must have a name registered
-        // 如果上家存在，车将20%累加到上家的邀请累计额度里，否则直接给p3d
-        if (_affID != _pID && plyr_[_affID].name != "") {
+        if (_affID != _pID && plyr_[_affID].name != '') {
             plyr_[_affID].aff = _aff.add(plyr_[_affID].aff);
             emit F3Devents.onAffiliatePayout(_affID, plyr_[_affID].addr, plyr_[_affID].name, _rID, _pID, _aff, now);
         } else {
@@ -1448,13 +1467,11 @@ contract FoMoGame is modularLong {
         }
 
         // pay out p3d
-        // 理论上应该是0
         _p3d = _p3d.add((_eth.mul(fees_[_team].p3d)) / (100));
         if (_p3d > 0)
         {
             // deposit to divies contract
-            team.transfer(_p3d);
-            _p3d = 0;
+            Divies.deposit.value(_p3d)();
 
             // set up event data
             _eventData_.P3DAmount = _p3d.add(_eventData_.P3DAmount);
@@ -1482,15 +1499,14 @@ contract FoMoGame is modularLong {
     returns(F3Ddatasets.EventReturns)
     {
         // calculate gen share
-        uint256 _gen = (_eth.mul(fees_[_team].gen)) / 100; // 队伍的比例
+        uint256 _gen = (_eth.mul(fees_[_team].gen)) / 100;
 
         // toss 1% into airdrop pot
         uint256 _air = (_eth / 100);
         airDropPot_ = airDropPot_.add(_air);
 
         // update eth balance (eth = eth - (com share + pot swap share + aff share + p3d share + airdrop pot share))
-        // 这里的23 = 社区2% + P3D或上家20% + 空投1%，可以参看方法distributeExternal
-        _eth = _eth.sub(((_eth.mul(23)) / 100).add((_eth.mul(fees_[_team].p3d)) / 100));
+        _eth = _eth.sub(((_eth.mul(14)) / 100).add((_eth.mul(fees_[_team].p3d)) / 100));
 
         // calculate pot
         uint256 _pot = _eth.sub(_gen);
@@ -1512,7 +1528,7 @@ contract FoMoGame is modularLong {
     }
 
     /**
-     * @dev updates masks for round and player when keys are bought // 当KEY被购买的时候更新本轮的mask和玩家的mask
+     * @dev updates masks for round and player when keys are bought
      * @return dust left over
      */
     function updateMasks(uint256 _rID, uint256 _pID, uint256 _gen, uint256 _keys)
@@ -1530,12 +1546,10 @@ contract FoMoGame is modularLong {
             how much is still owed to me?"
         */
 
-        // ## 更新本轮的mask(本轮全局的)
-        // calc profit per key & round mask based on this buy:  (dust goes to pot) // 计算每一个KEY的价值，轮的mask基于这次购买
+        // calc profit per key & round mask based on this buy:  (dust goes to pot)
         uint256 _ppt = (_gen.mul(1000000000000000000)) / (round_[_rID].keys);
         round_[_rID].mask = _ppt.add(round_[_rID].mask);
 
-        // ## 更新玩家在本轮的mask(本轮个人的)
         // calculate player earning from their own buy (only based on the keys
         // they just bought).  & update player earnings mask
         uint256 _pearn = (_ppt.mul(_keys)) / (1000000000000000000);
@@ -1606,13 +1620,18 @@ contract FoMoGame is modularLong {
     function activate()
     public
     {
-
-        // MARK: 管理员地址
+        // only team just can activate
         require(
-            msg.sender == 0x3C21550C76B9C0Eb32ceA5f7ea71d54f366961a1 ||
-            msg.sender == 0x3123AD3e691bC320aaCC8ab91A0E32A7eE4C4b9a,
-            "only team can activate"
+            msg.sender == 0x18E90Fc6F70344f53EBd4f6070bf6Aa23e2D748C ||
+            msg.sender == 0x8b4DA1827932D71759687f925D17F81Fc94e3A9D ||
+            msg.sender == 0x8e0d985f3Ec1857BEc39B76aAabDEa6B31B67d53 ||
+            msg.sender == 0x7ac74Fcc1a71b106F12c55ee8F802C9F672Ce40C ||
+            msg.sender == 0xF39e044e1AB204460e06E87c6dca2c6319fC69E3,
+            "only team just can activate"
         );
+
+        // make sure that its been linked.
+        require(address(otherF3D_) != address(0), "must link to other FoMo3D first");
 
         // can only be ran once
         require(activated_ == false, "fomo3d already activated");
@@ -1625,7 +1644,25 @@ contract FoMoGame is modularLong {
         round_[1].strt = now + rndExtra_ - rndGap_;
         round_[1].end = now + rndInit_ + rndExtra_;
     }
+    function setOtherFomo(address _otherF3D)
+    public
+    {
+        // only team just can activate
+        require(
+            msg.sender == 0x18E90Fc6F70344f53EBd4f6070bf6Aa23e2D748C ||
+            msg.sender == 0x8b4DA1827932D71759687f925D17F81Fc94e3A9D ||
+            msg.sender == 0x8e0d985f3Ec1857BEc39B76aAabDEa6B31B67d53 ||
+            msg.sender == 0x7ac74Fcc1a71b106F12c55ee8F802C9F672Ce40C ||
+            msg.sender == 0xF39e044e1AB204460e06E87c6dca2c6319fC69E3,
+            "only team just can activate"
+        );
 
+        // make sure that it HASNT yet been linked.
+        require(address(otherF3D_) == address(0), "silly dev, you already did that");
+
+        // set up other fomo3d (fast or long) for pot swap
+        otherF3D_ = otherFoMo3D(_otherF3D);
+    }
 }
 
 //==============================================================================
@@ -1652,7 +1689,6 @@ library F3Ddatasets {
     // 0-25 - pID
     // 26-51 - winPID
     // 52-77 - rID
-    // 一局结束后返回的数据
     struct EventReturns {
         uint256 compressedData;
         uint256 compressedIDs;
@@ -1685,21 +1721,21 @@ library F3Ddatasets {
         uint256 end;    // time ends/ended
         bool ended;     // has round end function been ran
         uint256 strt;   // time round started
-        uint256 keys;   // keys // KEY的总数量
-        uint256 eth;    // total eth in // 总共的eth
-        uint256 pot;    // eth to pot (during round) / final amount paid to winner (after round ends) // 奖池中所有的eth
+        uint256 keys;   // keys
+        uint256 eth;    // total eth in
+        uint256 pot;    // eth to pot (during round) / final amount paid to winner (after round ends)
         uint256 mask;   // global mask
-        uint256 ico;    // total eth sent in during ICO phase /在ICO阶段
-        uint256 icoGen; // total eth for gen during ICO phase /在ICO阶段
-        uint256 icoAvg; // average key price for ICO phase // 在ICO阶段KEY的平均价
+        uint256 ico;    // total eth sent in during ICO phase
+        uint256 icoGen; // total eth for gen during ICO phase
+        uint256 icoAvg; // average key price for ICO phase
     }
     struct TeamFee {
         uint256 gen;    // % of buy in thats paid to key holders of current round
         uint256 p3d;    // % of buy in thats paid to p3d holders
     }
-    struct PotSplit { // 奖池瓜分
-        uint256 gen;    // % of pot thats paid to key holders of current round // 将奖池中的多少的百分比支付KEY的持有者
-        uint256 p3d;    // % of pot thats paid to p3d holders // 将奖池中的多少的百分比支付P3D
+    struct PotSplit {
+        uint256 gen;    // % of pot thats paid to key holders of current round
+        uint256 p3d;    // % of pot thats paid to p3d holders
     }
 }
 
@@ -1768,7 +1804,29 @@ library F3DKeysCalcLong {
 //  . _ _|_ _  _ |` _  _ _  _  .
 //  || | | (/_| ~|~(_|(_(/__\  .
 //==============================================================================
+interface otherFoMo3D {
+    function potSwap() external payable;
+}
 
+interface F3DexternalSettingsInterface {
+    function getFastGap() external returns(uint256);
+    function getLongGap() external returns(uint256);
+    function getFastExtra() external returns(uint256);
+    function getLongExtra() external returns(uint256);
+}
+
+interface DiviesInterface {
+    function deposit() external payable;
+}
+
+interface JIincForwarderInterface {
+    function deposit() external payable returns(bool);
+    function status() external view returns(address, address, bool);
+    function startMigration(address _newCorpBank) external returns(bool);
+    function cancelMigration() external returns(bool);
+    function finishMigration() external returns(bool);
+    function setup(address _firstCorpBank) external;
+}
 
 interface PlayerBookInterface {
     function getPlayerID(address _addr) external returns (uint256);
@@ -1780,6 +1838,30 @@ interface PlayerBookInterface {
     function registerNameXaddrFromDapp(address _addr, bytes32 _name, address _affCode, bool _all) external payable returns(bool, uint256);
     function registerNameXnameFromDapp(address _addr, bytes32 _name, bytes32 _affCode, bool _all) external payable returns(bool, uint256);
 }
+
+/**
+* @title -Name Filter- v0.1.9
+* ┌┬┐┌─┐┌─┐┌┬┐   ╦╦ ╦╔═╗╔╦╗  ┌─┐┬─┐┌─┐┌─┐┌─┐┌┐┌┌┬┐┌─┐
+*  │ ├┤ ├─┤│││   ║║ ║╚═╗ ║   ├─┘├┬┘├┤ └─┐├┤ │││ │ └─┐
+*  ┴ └─┘┴ ┴┴ ┴  ╚╝╚═╝╚═╝ ╩   ┴  ┴└─└─┘└─┘└─┘┘└┘ ┴ └─┘
+*                                  _____                      _____
+*                                 (, /     /)       /) /)    (, /      /)          /)
+*          ┌─┐                      /   _ (/_      // //       /  _   // _   __  _(/
+*          ├─┤                  ___/___(/_/(__(_/_(/_(/_   ___/__/_)_(/_(_(_/ (_(_(_
+*          ┴ ┴                /   /          .-/ _____   (__ /
+*                            (__ /          (_/ (, /                                      /)™
+*                                                 /  __  __ __ __  _   __ __  _  _/_ _  _(/
+* ┌─┐┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐                          /__/ (_(__(_)/ (_/_)_(_)/ (_(_(_(__(/_(_(_
+* ├─┘├┬┘│ │ │││ ││   │                      (__ /              .-/  © Jekyll Island Inc. 2018
+* ┴  ┴└─└─┘─┴┘└─┘└─┘ ┴                                        (_/
+*              _       __    _      ____      ____  _   _    _____  ____  ___
+*=============| |\ |  / /\  | |\/| | |_ =====| |_  | | | |    | |  | |_  | |_)==============*
+*=============|_| \| /_/--\ |_|  | |_|__=====|_|   |_| |_|__  |_|  |_|__ |_| \==============*
+*
+* ╔═╗┌─┐┌┐┌┌┬┐┬─┐┌─┐┌─┐┌┬┐  ╔═╗┌─┐┌┬┐┌─┐ ┌──────────┐
+* ║  │ ││││ │ ├┬┘├─┤│   │   ║  │ │ ││├┤  │ Inventor │
+* ╚═╝└─┘┘└┘ ┴ ┴└─┴ ┴└─┘ ┴   ╚═╝└─┘─┴┘└─┘ └──────────┘
+*/
 
 library NameFilter {
     /**
